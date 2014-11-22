@@ -26,7 +26,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6" >
+            android:layout_weight="24" >
 
             <Space
                 android:layout_width="match_parent"
@@ -35,11 +35,13 @@
 
             <TextView
                 android:id="@+id/textView1"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:gravity="right"
                 android:text="000000000000000000000"
-                android:textSize="15sp" 
-                android:layout_weight="1"/>
+                android:textSize="15sp" />
 
         </LinearLayout>
         
@@ -47,26 +49,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="6" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-
-            </LinearLayout>
-
-        </LinearLayout>
 
 
     </LinearLayout>
@@ -87,26 +69,30 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/leftButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Button" />
+                android:onClick="leftButton"
+                android:text="左" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/didandaView"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:src="@drawable/left_didanda" />
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/rightButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:onClick="rightButton"
+                android:text="みぎ" />
+
         </LinearLayout>
 
     </LinearLayout>
