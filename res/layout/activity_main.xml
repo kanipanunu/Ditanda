@@ -3,6 +3,7 @@
     android:id="@+id/FrameLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="fromGameover"
     tools:context=".MainActivity" >
 
     <ScrollView
@@ -28,10 +29,12 @@
             android:layout_height="match_parent"
             android:layout_weight="24" >
 
-            <Space
+            <TextView
+                android:id="@+id/timetext"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" 
-                android:layout_weight="1"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="time" />
 
             <TextView
                 android:id="@+id/scoreText"
@@ -94,6 +97,29 @@
                 android:text="みぎ" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="100dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/gameover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="げーむおーばー…" />
+
+        <TextView
+            android:id="@+id/taptext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="tap!" />
 
     </LinearLayout>
 
