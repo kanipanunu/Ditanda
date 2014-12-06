@@ -8,7 +8,9 @@ import java.util.TimerTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.content.Intent;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +19,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	ImageView didandaView;
 	int point, five_roop;
-	TextView scoreText, gameOverText, timeText,tapText;
+	TextView scoreText, gameOverText, timeText, tapText;
 	long timeList[] = new long[4];
 	long timeDifference[] = new long[4];
 	String lasTap = "左";
@@ -25,13 +27,11 @@ public class MainActivity extends Activity {
 	Timer timer = null;
 	Timer countTimer = null;
 	Handler handle = new Handler();
-	boolean tap=false;
+	boolean tap = false;
 
-	
-	
-	boolean gameover=false;
+	boolean gameover = false;
 
-	float time=0;
+	float time = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +42,14 @@ public class MainActivity extends Activity {
 		gameOverText = (TextView) findViewById(R.id.gameover);
 		gameOverText.setVisibility(View.INVISIBLE);
 		timeText = (TextView) findViewById(R.id.timetext);
-		tapText=(TextView)findViewById(R.id.taptext);
+		tapText = (TextView) findViewById(R.id.taptext);
 		tapText.setVisibility(View.INVISIBLE);
 	}
 
 	public void rightButton(View v) {
-		if(point==0){
+		if (point == 0) {
 			countUp();
-		}else if (lasTap == "左") {
+		} else if (lasTap == "左") {
 			countUp();
 		}
 		didandaView.setImageResource(R.drawable.right_didanda);
@@ -58,9 +58,9 @@ public class MainActivity extends Activity {
 	}
 
 	public void leftButton(View v) {
-		if(point==0){
+		if (point == 0) {
 			countUp();
-		}else if (lasTap == "右") {
+		} else if (lasTap == "右") {
 			countUp();
 		}
 		didandaView.setImageResource(R.drawable.left_didanda);
@@ -70,14 +70,18 @@ public class MainActivity extends Activity {
 
 	public void countUp() {
 		if (timer == null) {
-			timer= new Timer();
+			timer = new Timer();
 			// タイマーの初期化処理
-			timer.schedule(new MytimerTask(), 10,10);
+			timer.schedule(new MytimerTask(), 10, 10);
 			// timer.schedule(task, when)
 		}
+
 		if (countTimer != null) {
 			countTimer.cancel();
 		}
+		countTimer = new Timer();
+		countTimer.schedule(new MyTimer(), 2000);
+
 		point++;
 		scoreText.setText("" + point * 100);
 		five_roop++;
@@ -97,9 +101,6 @@ public class MainActivity extends Activity {
 		if (five_roop <= 4) {
 			five_roop = 0;
 		}
-		countTimer = new Timer();
-		countTimer.schedule(new MyTimer(), 2000);
-
 	}
 
 	class MyTimer extends TimerTask {
@@ -124,36 +125,63 @@ public class MainActivity extends Activity {
 			handle.post(new Runnable() {
 				@Override
 				public void run() {
-					if(!gameover){
-					timeText.setText(""+time/100);
+					timeText.setText("" + time / 100);
 					time++;
-					}else{
-						for(int i=0;i<5;i++){
-							if(i==4){
-								if(tap){
-									tapText.setVisibility(View.INVISIBLE);
-									tap=false;
-								}else{
-									tapText.setVisibility(View.VISIBLE);
-									tap=true;
-								}
-								i=0;
-							}
-						}
-					}
 				}
 			});
 		}
 
 	}
 
-	public void gameOver() {
-		// げーむおーばーになった時の処理。
-		gameOverText.setVisibility(View.VISIBLE);
-		tapText.setVisibility(View.VISIBLE);
-		tap=true;
-		gameover=true;
+	class GameOverTask extends TimerTask {
+		@Override
+		public void run() {
+			// TODO 自動生成されたメソッド・スタブ
+			handle.post(new Runnable() {
 
+				@Override
+				public void run() {
+					// TODO 自動生成されたメソッド・スタブ
+					if (tap) {
+						tapText.setVisibility(View.INVISIBLE);
+						tap = false;
+					} else {
+						tapText.setVisibility(View.VISIBLE);
+						tap = true;
+					}
+				}
+			});
+		}
+	}
+
+	public void gameOver() {
+		// げーむおーばーになった時の処理。??
+		Log.d("げむおば", "げむおば");
+		gameOverText.setVisibility(View.VISIBLE);
+		// ためし
+		Log.d("もん", "monn");
+		gameOverText.setText("おわわわわわ、もんちゃん");
+		tapText.setVisibility(View.VISIBLE);
+		tap = true;
+		gameover = true;
+
+		if (timer != null) {
+			timer.cancel();
+		}
+		timer = null;
+		if (countTimer != null) {
+			countTimer.cancel();
+		}
+		countTimer = null;
+
+		timer = new Timer();
+		timer.schedule(new GameOverTask(), 0, 500);
+	}
+	public void fromGameover(View v){
+		if(gameover){
+			Intent intent=new Intent();
+			intent.
+		}
 	}
 
 	@Override
