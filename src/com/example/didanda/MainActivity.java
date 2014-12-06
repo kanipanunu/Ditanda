@@ -18,10 +18,10 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	ImageView didandaView;
-	int point, five_roop;
+	int point, five_roop, upP;
 	TextView scoreText, gameOverText, timeText, tapText;
-	long timeList[] = new long[4];
-	long timeDifference[] = new long[4];
+	long before, now;
+	long timeDifference[] = new long[5];
 	String lasTap = "左";
 	long five_score;
 	Timer timer = null;
@@ -69,6 +69,9 @@ public class MainActivity extends Activity {
 	}
 
 	public void countUp() {
+
+		if (upP > 7 && upP < 32)
+			didandaView.setTranslationY(-2 * (upP - 6));
 		if (timer == null) {
 			timer = new Timer();
 			// タイマーの初期化処理
@@ -82,23 +85,30 @@ public class MainActivity extends Activity {
 		countTimer = new Timer();
 		countTimer.schedule(new MyTimer(), 2000);
 
-		point++;
 		scoreText.setText("" + point * 100);
-		five_roop++;
-		timeList[five_roop] = System.currentTimeMillis();
-		if (point >= 1) {// 2回目以降のタップ
-			timeDifference[five_roop] = timeList[five_roop]
-					- timeList[five_roop - 1];
-			if (point > 4) {// 五回目以降のタップ
-				for (int i = 0; i < 4; i++) {
-					five_score = five_score + timeList[i];
-				}
-				if (five_score < 100000) {// この数は変数にする。しきい値
-					gameOver();
-				}
-			}
+		now = System.currentTimeMillis();
+		if (point > 0) {// 2回目以降のタップ
+			timeDifference[five_roop] = now - before;
+		} else { // うごかしてみる
 		}
-		if (five_roop <= 4) {
+		before = now;
+
+		five_score = 0;
+		for (int i = 0; i < 5; i++) {
+			five_score = five_score + timeDifference[i];
+		}
+		Log.d("合計", "" + five_score);//
+		if (five_score < 700) {
+			upP++;
+		}
+		if (five_score > 1000) {// この数は変数にする。しきい値
+			gameOver();
+		}
+
+		point++;
+		five_roop++;
+
+		if (five_roop >= 5) {
 			five_roop = 0;
 		}
 	}
@@ -160,7 +170,6 @@ public class MainActivity extends Activity {
 		gameOverText.setVisibility(View.VISIBLE);
 		// ためし
 		Log.d("もん", "monn");
-		gameOverText.setText("おわわわわわ、もんちゃん");
 		tapText.setVisibility(View.VISIBLE);
 		tap = true;
 		gameover = true;
@@ -177,10 +186,11 @@ public class MainActivity extends Activity {
 		timer = new Timer();
 		timer.schedule(new GameOverTask(), 0, 500);
 	}
-	public void fromGameover(View v){
-		if(gameover){
-			Intent intent=new Intent();
-			intent.
+
+	public void fromGameover(View v) {
+		if (gameover) {
+			Log.d("たっぷ", "たっぷ");
+			finish();
 		}
 	}
 

@@ -47,12 +47,14 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
-        
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="6" />
 
+        <ImageView
+            android:id="@+id/didandaView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_weight="6"
+            android:src="@drawable/left_didanda" />
 
     </LinearLayout>
 
@@ -60,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:onClick="fromGameover"
         android:orientation="vertical" >
 
         <Space
@@ -80,13 +83,10 @@
                 android:onClick="leftButton"
                 android:text="左" />
 
-            <ImageView
-                android:id="@+id/didandaView"
+            <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_weight="3"
-                android:src="@drawable/left_didanda" />
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/rightButton"
@@ -105,6 +105,7 @@
         android:layout_height="match_parent"
         android:layout_margin="100dp"
         android:gravity="center"
+        android:onClick="fromGameover"
         android:orientation="vertical" >
 
         <TextView

@@ -16,15 +16,16 @@
         <activity
             android:name="com.example.didanda.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
+       </activity>
+        <activity
+            android:name="com.example.didanda.StartActivity"
+            android:label="@string/title_activity_start" >
+                       <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.example.didanda.StartActivity"
-            android:label="@string/title_activity_start" >
+  
         </activity>
     </application>
 
