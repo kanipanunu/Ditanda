@@ -47,69 +47,76 @@ public class MainActivity extends Activity {
 	}
 
 	public void rightButton(View v) {
-		if (point == 0) {
-			countUp();
-		} else if (lasTap == "左") {
-			countUp();
-		}
-		didandaView.setImageResource(R.drawable.right_didanda);
-		lasTap = "右";
+		if (!gameover) {
+			if (point == 0) {
+				countUp();
+			} else if (lasTap == "左") {
+				countUp();
+			}
+			didandaView.setImageResource(R.drawable.right_didanda);
+			lasTap = "右";
 
+		}
 	}
 
 	public void leftButton(View v) {
-		if (point == 0) {
-			countUp();
-		} else if (lasTap == "右") {
-			countUp();
-		}
-		didandaView.setImageResource(R.drawable.left_didanda);
-		lasTap = "左";
+		if (!gameover) {
+			if (point == 0) {
+				countUp();
+			} else if (lasTap == "右") {
+				countUp();
+			}
+			didandaView.setImageResource(R.drawable.left_didanda);
+			lasTap = "左";
 
+		}
 	}
 
 	public void countUp() {
+		if (!gameover) {
 
-		if (upP > 7 && upP < 32)
-			didandaView.setTranslationY(-2 * (upP - 6));
-		if (timer == null) {
-			timer = new Timer();
-			// タイマーの初期化処理
-			timer.schedule(new MytimerTask(), 10, 10);
-			// timer.schedule(task, when)
-		}
+			if (upP > 7 && upP < 32) {
+				didandaView.setTranslationY(-2 * (upP - 6));
+			}
+			if (timer == null) {
+				timer = new Timer();
+				// タイマーの初期化処理
+				timer.schedule(new MytimerTask(), 10, 10);
+				// timer.schedule(task, when)
+			}
 
-		if (countTimer != null) {
-			countTimer.cancel();
-		}
-		countTimer = new Timer();
-		countTimer.schedule(new MyTimer(), 2000);
+			if (countTimer != null) {
+				countTimer.cancel();
+			}
+			countTimer = new Timer();
+			countTimer.schedule(new MyTimer(), 2000);
 
-		scoreText.setText("" + point * 100);
-		now = System.currentTimeMillis();
-		if (point > 0) {// 2回目以降のタップ
-			timeDifference[five_roop] = now - before;
-		} else { // うごかしてみる
-		}
-		before = now;
+			scoreText.setText("" + point * 100);
+			now = System.currentTimeMillis();
+			if (point > 0) {// 2回目以降のタップ
+				timeDifference[five_roop] = now - before;
+			} else { // うごかしてみる
+			}
+			before = now;
 
-		five_score = 0;
-		for (int i = 0; i < 5; i++) {
-			five_score = five_score + timeDifference[i];
-		}
-		Log.d("合計", "" + five_score);//
-		if (five_score < 700) {
-			upP++;
-		}
-		if (five_score > 1000) {// この数は変数にする。しきい値
-			gameOver();
-		}
+			five_score = 0;
+			for (int i = 0; i < 5; i++) {
+				five_score = five_score + timeDifference[i];
+			}
+			Log.d("合計", "" + five_score);//
+			if (five_score < 700) {
+				upP++;
+			}
+			if (five_score > 1000) {// この数は変数にする。しきい値
+				gameOver();
+			}
 
-		point++;
-		five_roop++;
+			point++;
+			five_roop++;
 
-		if (five_roop >= 5) {
-			five_roop = 0;
+			if (five_roop >= 5) {
+				five_roop = 0;
+			}
 		}
 	}
 
