@@ -1,5 +1,6 @@
 package com.example.didanda;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Display;
@@ -38,6 +40,7 @@ public class MainActivity extends Activity {
 	boolean tap = false;
 	LinearLayout backGround;
 
+
 	boolean gameover = false;
 
 	float time = 0;
@@ -53,18 +56,45 @@ public class MainActivity extends Activity {
 		timeText = (TextView) findViewById(R.id.timetext);
 		tapText = (TextView) findViewById(R.id.taptext);
 		tapText.setVisibility(View.INVISIBLE);
-		backGround=(LinearLayout)findViewById(R.id.backGround);
-		ImageView backSky=new ImageView(this);
+		backGround = (LinearLayout) findViewById(R.id.backGround);
+		ImageView backSky = new ImageView(this);
 		backSky.setImageResource(drawable.sky);
 		backSky.setScaleType(ScaleType.FIT_XY);
-	    backGround.addView(backSky, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT ));
-	    Display display = getWindowManager().getDefaultDisplay();//ディスプレイのサイズをとる
-	    display.getSize(outSize);
+		backGround.addView(backSky, new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT));
+		Display display = getWindowManager().getDefaultDisplay();// ディスプレイのサイズをとる
+		Point size = new Point();
+		overrideGetSize(display, size);
+		int width=size.x;
+		int height=size.y;
+//		backSky.setY(-height);
 
 
 	}
-	
-	
+
+	@Override
+	protected void onStart() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onStart();
+		
+	}
+
+	void overrideGetSize(Display display, Point outSize) {
+		try {
+			// test for new method to trigger exception
+			Class pointClass = Class.forName("android.graphics.Point");
+			Method newGetSize = Display.class.getMethod("getSize",
+					new Class[] { pointClass });
+
+			// no exception, so new method is available, just use it
+			newGetSize.invoke(display, outSize);
+		} catch (Exception ex) {
+			// new method is not available, use the old ones
+			outSize.x = display.getWidth();
+			outSize.y = display.getHeight();
+		}
+	}
 
 	public void rightButton(View v) {
 		if (!gameover) {
@@ -109,7 +139,7 @@ public class MainActivity extends Activity {
 				countTimer.cancel();
 			}
 			countTimer = new Timer();
-			countTimer.schedule(new MyTimer(), 2000);
+			countTimer.schedule(new MyTimer(), 1000);
 
 			scoreText.setText("" + point * 100);
 			now = System.currentTimeMillis();
@@ -212,9 +242,9 @@ public class MainActivity extends Activity {
 
 		timer = new Timer();
 		timer.schedule(new GameOverTask(), 0, 500);
-		
-		///げーむおーばーの時のぢだんだviewにつける。
-		TranslateAnimation trans =new TranslateAnimation(0,0,0,1000);
+
+		// /げーむおーばーの時のぢだんだviewにつける。
+		TranslateAnimation trans = new TranslateAnimation(0, 0, 0, 1000);
 		trans.setDuration(500);
 		trans.setFillAfter(true);
 		didandaView.startAnimation(trans);
