@@ -12,22 +12,26 @@
         android:layout_height="match_parent" >
 
         <LinearLayout
+            android:id="@+id/backGround"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#00000000"
             android:orientation="vertical" >
+
         </LinearLayout>
     </ScrollView>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#00000000"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="24" >
+            android:layout_weight="24"
+            android:background="#00000000" >
 
             <TextView
                 android:id="@+id/timetext"
@@ -62,6 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="#00000000"
         android:onClick="fromGameover"
         android:orientation="vertical" >
 
@@ -72,7 +77,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:background="#00000000" >
 
             <Button
                 android:id="@+id/leftButton"
@@ -104,6 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="100dp"
+        android:background="#00000000"
         android:gravity="center"
         android:onClick="fromGameover"
         android:orientation="vertical" >

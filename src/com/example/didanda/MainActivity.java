@@ -5,16 +5,23 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.example.didanda.R.drawable;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -29,7 +36,7 @@ public class MainActivity extends Activity {
 	Timer countTimer = null;
 	Handler handle = new Handler();
 	boolean tap = false;
-	TranslateAnimation translateAnimation;
+	LinearLayout backGround;
 
 	boolean gameover = false;
 
@@ -46,6 +53,15 @@ public class MainActivity extends Activity {
 		timeText = (TextView) findViewById(R.id.timetext);
 		tapText = (TextView) findViewById(R.id.taptext);
 		tapText.setVisibility(View.INVISIBLE);
+		backGround=(LinearLayout)findViewById(R.id.backGround);
+		ImageView backSky=new ImageView(this);
+		backSky.setImageResource(drawable.sky);
+		backSky.setScaleType(ScaleType.FIT_XY);
+	    backGround.addView(backSky, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT ));
+	    Display display = getWindowManager().getDefaultDisplay();//ディスプレイのサイズをとる
+	    display.getSize(outSize);
+
+
 	}
 	
 	
