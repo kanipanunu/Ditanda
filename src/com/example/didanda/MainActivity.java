@@ -24,6 +24,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
 	Handler handle = new Handler();
 	boolean tap = false;
 	LinearLayout backGround;
-
+	ScrollView scrollView;
 
 	boolean gameover = false;
 
@@ -56,28 +57,59 @@ public class MainActivity extends Activity {
 		timeText = (TextView) findViewById(R.id.timetext);
 		tapText = (TextView) findViewById(R.id.taptext);
 		tapText.setVisibility(View.INVISIBLE);
+
+		scrollView = (ScrollView) findViewById(R.id.scrollView1);
+
 		backGround = (LinearLayout) findViewById(R.id.backGround);
-		ImageView backSky = new ImageView(this);
-		backSky.setImageResource(drawable.sky);
-		backSky.setScaleType(ScaleType.FIT_XY);
-		backGround.addView(backSky, new LinearLayout.LayoutParams(
+		// ImageView backSky = new ImageView(this);
+		// backSky.setImageResource(drawable.sky);
+		// backSky.setScaleType(ScaleType.FIT_XY);
+		// backGround.addView(backSky, new LinearLayout.LayoutParams(
+		// ViewGroup.LayoutParams.MATCH_PARENT,
+		// ViewGroup.LayoutParams.MATCH_PARENT));
+
+		ImageView sky1 = new ImageView(this);
+		sky1.setImageResource(drawable.sky1);
+		sky1.setScaleType(ScaleType.FIT_XY);
+		backGround.addView(sky1, new LinearLayout.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
+
+		ImageView sky2 = new ImageView(this);
+		sky2.setImageResource(drawable.sky2);
+		sky2.setScaleType(ScaleType.FIT_XY);
+		backGround.addView(sky2, new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT));
+
+		ImageView sky3 = new ImageView(this);
+		sky3.setImageResource(drawable.sky3);
+		sky3.setScaleType(ScaleType.FIT_XY);
+		backGround.addView(sky3, new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT));
+
+		ImageView sky4 = new ImageView(this);
+		sky4.setImageResource(drawable.sky4);
+		sky4.setScaleType(ScaleType.FIT_XY);
+		backGround.addView(sky4, new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT));
+
 		Display display = getWindowManager().getDefaultDisplay();// ディスプレイのサイズをとる
 		Point size = new Point();
 		overrideGetSize(display, size);
-		int width=size.x;
-		int height=size.y;
-//		backSky.setY(-height);
+		int width = size.x;
+		int height = size.y;
+		// backSky.setY(-height);
+		Log.d("たかさ", "" + height * 3);
+		scrollView.post(new Runnable() {
+			@Override
+			public void run() {
+				scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
 
-
-	}
-
-	@Override
-	protected void onStart() {
-		// TODO 自動生成されたメソッド・スタブ
-		super.onStart();
-		
 	}
 
 	void overrideGetSize(Display display, Point outSize) {
@@ -127,6 +159,10 @@ public class MainActivity extends Activity {
 
 			if (upP > 7 && upP < 32) {
 				didandaView.setTranslationY(-2 * (upP - 6));
+			} else if (upP < 8) {
+
+			} else {
+				scrollView.scrollBy(0, -10);
 			}
 			if (timer == null) {
 				timer = new Timer();
@@ -154,11 +190,18 @@ public class MainActivity extends Activity {
 				five_score = five_score + timeDifference[i];
 			}
 			Log.d("合計", "" + five_score);//
-			if (five_score < 700) {
+			if (five_score < 400) {
+				upP=upP+2;
+			}
+			if (five_score < 600) {
 				upP++;
 			}
 			if (five_score > 1000) {// この数は変数にする。しきい値
-				gameOver();
+				if (upP < 8) {
+
+				} else {
+					gameOver();
+				}
 			}
 
 			point++;
@@ -225,8 +268,6 @@ public class MainActivity extends Activity {
 		// げーむおーばーになった時の処理。??
 		Log.d("げむおば", "げむおば");
 		gameOverText.setVisibility(View.VISIBLE);
-		// ためし
-		Log.d("もん", "monn");
 		tapText.setVisibility(View.VISIBLE);
 		tap = true;
 		gameover = true;
