@@ -13,6 +13,7 @@ import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class MainActivity extends Activity {
 	Timer countTimer = null;
 	Handler handle = new Handler();
 	boolean tap = false;
+	TranslateAnimation translateAnimation;
 
 	boolean gameover = false;
 
@@ -45,6 +47,8 @@ public class MainActivity extends Activity {
 		tapText = (TextView) findViewById(R.id.taptext);
 		tapText.setVisibility(View.INVISIBLE);
 	}
+	
+	
 
 	public void rightButton(View v) {
 		if (!gameover) {
@@ -192,6 +196,13 @@ public class MainActivity extends Activity {
 
 		timer = new Timer();
 		timer.schedule(new GameOverTask(), 0, 500);
+		
+		///げーむおーばーの時のぢだんだviewにつける。
+		TranslateAnimation trans =new TranslateAnimation(0,0,0,1000);
+		trans.setDuration(500);
+		trans.setFillAfter(true);
+		didandaView.startAnimation(trans);
+
 	}
 
 	public void fromGameover(View v) {
