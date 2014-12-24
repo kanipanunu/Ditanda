@@ -34,13 +34,18 @@ public class MainActivity extends Activity {
 	long before, now;
 	long timeDifference[] = new long[5];
 	String lasTap = "左";
-	long five_score;
+	float five_score;
 	Timer timer = null;
 	Timer countTimer = null;
 	Handler handle = new Handler();
 	boolean tap = false;
+	boolean UPUP = false;
 	LinearLayout backGround;
 	ScrollView scrollView;
+
+	int updown;
+
+	Float x = (float) 1;
 
 	boolean gameover = false;
 
@@ -59,7 +64,16 @@ public class MainActivity extends Activity {
 		tapText.setVisibility(View.INVISIBLE);
 
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
-
+		Intent intent = getIntent();
+		int difficuly;
+		difficuly = intent.getIntExtra("難易度", 0);
+		if (difficuly == 0) {
+			x = (float) 0.9;
+		} else if (difficuly == 1) {
+			x = (float) 1;
+		} else {
+			x = (float) 1.2;
+		}
 		backGround = (LinearLayout) findViewById(R.id.backGround);
 		// ImageView backSky = new ImageView(this);
 		// backSky.setImageResource(drawable.sky);
@@ -159,11 +173,8 @@ public class MainActivity extends Activity {
 
 			if (upP > 7 && upP < 32) {
 				didandaView.setTranslationY(-2 * (upP - 6));
-			} else if (upP < 8) {
-
-			} else {
-				scrollView.scrollBy(0, -10);
 			}
+
 			if (timer == null) {
 				timer = new Timer();
 				// タイマーの初期化処理
@@ -177,7 +188,7 @@ public class MainActivity extends Activity {
 			countTimer = new Timer();
 			countTimer.schedule(new MyTimer(), 1000);
 
-			scoreText.setText("" + point * 100);
+			scoreText.setText("" + upP);
 			now = System.currentTimeMillis();
 			if (point > 0) {// 2回目以降のタップ
 				timeDifference[five_roop] = now - before;
@@ -189,12 +200,26 @@ public class MainActivity extends Activity {
 			for (int i = 0; i < 5; i++) {
 				five_score = five_score + timeDifference[i];
 			}
+			five_score = five_score / x;
 			Log.d("合計", "" + five_score);//
-			if (five_score < 400) {
-				upP=upP+2;
-			}
-			if (five_score < 600) {
+			if (five_score < 350) {
 				upP++;
+				updown = 3;
+			}
+			if (five_score < 400) {
+				upP++;
+				UPUP = true;
+				updown = 2;
+			} else if (five_score < 600) {
+				upP++;
+				UPUP = true;
+				updown = 1;
+			} else if (five_score < 700) {
+				UPUP = false;
+				updown = 0;
+			} else {
+
+				updown = -1;
 			}
 			if (five_score > 1000) {// この数は変数にする。しきい値
 				if (upP < 8) {
@@ -202,6 +227,7 @@ public class MainActivity extends Activity {
 				} else {
 					gameOver();
 				}
+				UPUP = false;
 			}
 
 			point++;
@@ -283,18 +309,42 @@ public class MainActivity extends Activity {
 
 		timer = new Timer();
 		timer.schedule(new GameOverTask(), 0, 500);
+		if (upP < 31) {
+			// /げーむおーばーの時のぢだんだviewにつける。
+			TranslateAnimation trans = new TranslateAnimation(0, 0, 0,
+					2 * (upP - 6));// 1000
+			trans.setDuration(upP - 6);// 500
+			trans.setFillAfter(true);
+			didandaView.startAnimation(trans);
+			TranslateAnimation trans2 = new TranslateAnimation(0, 0, 0, 0);// 1000
+			trans2.setStartOffset(upP - 6);
+			trans2.setDuration(upP - 6 + (upP - 6) / 2);// 500
+			trans2.setFillAfter(true);
+			didandaView.startAnimation(trans2);
+		} else if (upP < 400) {
+			TranslateAnimation trans = new TranslateAnimation(0, 0, 0,
+					50 + (upP - 31) * 5);// 1000
+			trans.setDuration(upP - 6);// 500
+			trans.setFillAfter(true);
+			didandaView.startAnimation(trans);
 
-		// /げーむおーばーの時のぢだんだviewにつける。
-		TranslateAnimation trans = new TranslateAnimation(0, 0, 0, 1000);
-		trans.setDuration(500);
-		trans.setFillAfter(true);
-		didandaView.startAnimation(trans);
+		} else if (upP < 500) {
+			TranslateAnimation trans = new TranslateAnimation(0, 0, 0,
+					2 * (upP - 6));// 1000
+			trans.setDuration(upP - 6);// 500
+			trans.setFillAfter(true);
+			didandaView.startAnimation(trans);
+		} else {
+			TranslateAnimation trans = new TranslateAnimation(0, 0, 0, 1000);// 1000
+			trans.setDuration(500);// 500
+			trans.setFillAfter(true);
+			didandaView.startAnimation(trans);
+		}
 
 	}
 
 	public void fromGameover(View v) {
 		if (gameover) {
-			Log.d("たっぷ", "たっぷ");
 			finish();
 		}
 	}

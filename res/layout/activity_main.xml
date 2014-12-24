@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_weight="6"
-            android:src="@drawable/left_didanda" />
+            android:src="@drawable/first_didanda" />
 
     </LinearLayout>
 
