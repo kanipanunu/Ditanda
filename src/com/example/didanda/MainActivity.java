@@ -44,6 +44,8 @@ public class MainActivity extends Activity {
 	ScrollView scrollView;
 
 	int updown;
+	
+	int maxHeight,scrollHeight,;//ÉXÉNÉçÅ[ÉãÇ∑ÇÈÇ∆Ç´
 
 	Float x = (float) 1;
 
@@ -121,6 +123,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void run() {
 				scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+				scrollHeight=scrollView.getChildAt(0).getHeight() - scrollView.getHeight();
+				Log.d("ç°âÒÇÃÇ∫ÇÒÇΩÇ¢ÇÃÇΩÇ©Ç≥", ""+scrollHeight);
 			}
 		});
 
