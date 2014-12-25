@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
 
 	int updown;
 	
-	int maxHeight,scrollHeight,;//スクロールするとき
+	int maxHeight,scrollHeight;//スクロールするとき
 
 	Float x = (float) 1;
 
