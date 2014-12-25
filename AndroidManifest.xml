@@ -16,11 +16,13 @@
         <activity
             android:name="com.example.didanda.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.NoActionBar" >
         </activity>
         <activity
             android:name="com.example.didanda.StartActivity"
             android:label="@string/title_activity_start"
+            android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Holo.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

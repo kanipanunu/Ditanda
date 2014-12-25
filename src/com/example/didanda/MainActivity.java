@@ -1,20 +1,15 @@
 package com.example.didanda;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.example.didanda.R.drawable;
-
-import android.os.Bundle;
-import android.os.Handler;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
-import android.text.format.Time;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -27,10 +22,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.didanda.R.drawable;
+
 public class MainActivity extends Activity {
 	ImageView didandaView;
 	int point, five_roop, upP;
-	TextView scoreText, gameOverText, timeText, tapText;
+
+	View gameOverView;
+	TextView scoreText, timeText, tapText;
 	long before, now;
 	long timeDifference[] = new long[5];
 	String lasTap = "左";
@@ -44,35 +43,43 @@ public class MainActivity extends Activity {
 	ScrollView scrollView;
 
 	int updown;
-	int maxHeight,scrollHeight;//スクロールするとき
-	Float x = (float) 1;
+	int maxHeight, scrollHeight, oneupY, nowHeight;// スクロールするとき
+
+	Float x = (float) 1;// 難易度をきめる;
+	float u = (float) 1;
 
 	boolean gameover = false;
 
 	float time = 0;
+	
+	MediaPlayer mp = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		 mp = MediaPlayer.create(this, R.raw.sen_ge_panchi04);
+
+		//
 		didandaView = (ImageView) findViewById(R.id.didandaView);
 		scoreText = (TextView) findViewById(R.id.scoreText);
-		gameOverText = (TextView) findViewById(R.id.gameover);
-		gameOverText.setVisibility(View.INVISIBLE);
 		timeText = (TextView) findViewById(R.id.timetext);
-		tapText = (TextView) findViewById(R.id.taptext);
-		tapText.setVisibility(View.INVISIBLE);
+
+		gameOverView = findViewById(R.id.gameOverView);
+		tapText = (TextView) findViewById(R.id.taptext);//
+
+		gameOverView.setVisibility(View.INVISIBLE);
 
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
 		Intent intent = getIntent();
 		int difficuly;
 		difficuly = intent.getIntExtra("難易度", 0);
 		if (difficuly == 0) {
-			x = (float) 0.9;
+			x = (float) 1.2;
 		} else if (difficuly == 1) {
 			x = (float) 1;
 		} else {
-			x = (float) 1.2;
+			x = (float) 0.9;
 		}
 		backGround = (LinearLayout) findViewById(R.id.backGround);
 		// ImageView backSky = new ImageView(this);
@@ -121,8 +128,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void run() {
 				scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-				scrollHeight=scrollView.getChildAt(0).getHeight() - scrollView.getHeight();
-				Log.d("今回のぜんたいのたかさ", ""+scrollHeight);
+				scrollHeight = scrollView.getChildAt(0).getHeight()
+						- scrollView.getHeight();
+				Log.d("今回のぜんたいのたかさ", "" + scrollHeight);
+				maxHeight = 8000;
+				oneupY = maxHeight / scrollHeight;
 			}
 		});
 
@@ -171,10 +181,23 @@ public class MainActivity extends Activity {
 	}
 
 	public void countUp() {
+		
 		if (!gameover) {
+//			if(mp!=null){
+//			mp=null;
+//			 mp = MediaPlayer.create(this, R.raw.sen_ge_panchi04);
+//
+//			 mp.start();
+//			}
 
 			if (upP > 7 && upP < 32) {
 				didandaView.setTranslationY(-2 * (upP - 6));
+				nowHeight = nowHeight + (oneupY * updown);
+			} else if (upP > 31) {
+				scrollView.setScrollY(scrollView.getScrollY()
+						- (oneupY * updown));
+				nowHeight = nowHeight + (oneupY * updown);
+
 			}
 
 			if (timer == null) {
@@ -189,8 +212,9 @@ public class MainActivity extends Activity {
 			}
 			countTimer = new Timer();
 			countTimer.schedule(new MyTimer(), 1000);
-
-			scoreText.setText("" + upP);
+			if (nowHeight < 3201) {
+				scoreText.setText("" + nowHeight+"mm");
+			}
 			now = System.currentTimeMillis();
 			if (point > 0) {// 2回目以降のタップ
 				timeDifference[five_roop] = now - before;
@@ -199,16 +223,24 @@ public class MainActivity extends Activity {
 			before = now;
 
 			five_score = 0;
+			if(nowHeight>=400){
+				u=(float) 1.2;
+			}else if(nowHeight>=800){
+				u=(float)1.25;
+			}else if(nowHeight>=1200){
+				u=(float)1.3;
+			}else if(nowHeight>=1600){
+				u=(float)1.4;
+			}
 			for (int i = 0; i < 5; i++) {
 				five_score = five_score + timeDifference[i];
 			}
-			five_score = five_score / x;
-			Log.d("合計", "" + five_score);//
-			if (five_score < 350) {
+			five_score = five_score / x / u;
+			Log.d("合計", "" + five_score + "  " + updown);//
+			if (five_score < 300) {
 				upP++;
 				updown = 3;
-			}
-			if (five_score < 400) {
+			}else if (five_score < 400) {
 				upP++;
 				UPUP = true;
 				updown = 2;
@@ -221,7 +253,7 @@ public class MainActivity extends Activity {
 				updown = 0;
 			} else {
 
-				updown = -1;
+				updown = -5;
 			}
 			if (five_score > 1000) {// この数は変数にする。しきい値
 				if (upP < 8) {
@@ -295,8 +327,7 @@ public class MainActivity extends Activity {
 	public void gameOver() {
 		// げーむおーばーになった時の処理。??
 		Log.d("げむおば", "げむおば");
-		gameOverText.setVisibility(View.VISIBLE);
-		tapText.setVisibility(View.VISIBLE);
+		gameOverView.setVisibility(View.VISIBLE);
 		tap = true;
 		gameover = true;
 
@@ -311,7 +342,9 @@ public class MainActivity extends Activity {
 
 		timer = new Timer();
 		timer.schedule(new GameOverTask(), 0, 500);
-		if (upP < 31) {
+		if (upP < 7) {
+
+		} else if (upP < 31) {
 			// /げーむおーばーの時のぢだんだviewにつける。
 			TranslateAnimation trans = new TranslateAnimation(0, 0, 0,
 					2 * (upP - 6));// 1000
