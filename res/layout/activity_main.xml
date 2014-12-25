@@ -17,7 +17,6 @@
             android:layout_height="match_parent"
             android:background="#00000000"
             android:orientation="vertical" >
-
         </LinearLayout>
     </ScrollView>
 
@@ -49,17 +48,15 @@
                 android:gravity="right"
                 android:text="000000000000000000000"
                 android:textSize="15sp" />
-
         </LinearLayout>
 
         <ImageView
             android:id="@+id/didandaView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center|bottom"
             android:layout_weight="6"
             android:src="@drawable/first_didanda" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -72,8 +69,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-             />
+            android:layout_height="50dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,53 +78,52 @@
 
             <Button
                 android:id="@+id/leftButton"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#00000000"
                 android:gravity="center"
                 android:onClick="leftButton"
-                android:text="左" />
+                android:text="左"
+                android:textColor="#00000000" />
 
-            <Space
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/gameOverView"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:gravity="center"
+                android:onClick="fromGameover"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/gameover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="げーむおーばー…" />
+
+                <TextView
+                    android:id="@+id/taptext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="tap!" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/rightButton"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#00000000"
                 android:onClick="rightButton"
-                android:text="みぎ" />
-
+                android:text="みぎ"
+                android:textColor="#00000000" />
         </LinearLayout>
-
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="100dp"
-        android:background="#00000000"
-        android:gravity="center"
-        android:onClick="fromGameover"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/gameover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="げーむおーばー…" />
-
-        <TextView
-            android:id="@+id/taptext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="tap!" />
-
-    </LinearLayout>
+    
 
 </FrameLayout>
