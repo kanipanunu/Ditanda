@@ -44,9 +44,7 @@ public class MainActivity extends Activity {
 	ScrollView scrollView;
 
 	int updown;
-	
 	int maxHeight,scrollHeight;//ƒXƒNƒ[ƒ‹‚·‚é‚Æ‚«
-
 	Float x = (float) 1;
 
 	boolean gameover = false;
