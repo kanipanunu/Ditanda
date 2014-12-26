@@ -246,7 +246,7 @@ public class MainActivity extends Activity {
 				updown = 2;
 			} else if (five_score < 600) {
 				upP++;
-				UPUP = true;
+				UPUP = true;//
 				updown = 1;
 			} else if (five_score < 700) {
 				UPUP = false;
