@@ -1,4 +1,6 @@
-package com.example.didanda;
+package com.meguko.didanda;
+
+import com.meguko.didanda.R;
 
 import android.os.Bundle;
 import android.app.Activity;

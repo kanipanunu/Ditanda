@@ -1,4 +1,4 @@
-package com.example.didanda;
+package com.meguko.didanda;
 
 import java.lang.reflect.Method;
 import java.util.Timer;
@@ -21,8 +21,6 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.example.didanda.R.drawable;
 
 public class MainActivity extends Activity {
 	ImageView didandaView;
@@ -90,28 +88,28 @@ public class MainActivity extends Activity {
 		// ViewGroup.LayoutParams.MATCH_PARENT));
 
 		ImageView sky1 = new ImageView(this);
-		sky1.setImageResource(drawable.sky1);
+		sky1.setImageResource(R.drawable.sky1);
 		sky1.setScaleType(ScaleType.FIT_XY);
 		backGround.addView(sky1, new LinearLayout.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 
 		ImageView sky2 = new ImageView(this);
-		sky2.setImageResource(drawable.sky2);
+		sky2.setImageResource(R.drawable.sky2);
 		sky2.setScaleType(ScaleType.FIT_XY);
 		backGround.addView(sky2, new LinearLayout.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 
 		ImageView sky3 = new ImageView(this);
-		sky3.setImageResource(drawable.sky3);
+		sky3.setImageResource(R.drawable.sky3);
 		sky3.setScaleType(ScaleType.FIT_XY);
 		backGround.addView(sky3, new LinearLayout.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 
 		ImageView sky4 = new ImageView(this);
-		sky4.setImageResource(drawable.sky4);
+		sky4.setImageResource(R.drawable.sky4);
 		sky4.setScaleType(ScaleType.FIT_XY);
 		backGround.addView(sky4, new LinearLayout.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,
