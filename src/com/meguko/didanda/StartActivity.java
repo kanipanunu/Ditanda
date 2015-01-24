@@ -5,6 +5,7 @@ import com.meguko.didanda.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 public class StartActivity extends Activity {
@@ -23,12 +25,16 @@ public class StartActivity extends Activity {
 	Animation outToLeftAnimation;
 	Animation didandajumpAnimation;
 	ImageView didanda;
+	TextView highScore;
+
+	SharedPreferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 		startButton = (Button) findViewById(R.id.startButton);
+		highScore = (TextView) findViewById(R.id.highscore);
 		flipper = (ViewFlipper) findViewById(R.id.viewFlipper1);
 
 		inFromRightAnimation = AnimationUtils.loadAnimation(this,
@@ -39,20 +45,28 @@ public class StartActivity extends Activity {
 				R.anim.right_out);
 		outToLeftAnimation = AnimationUtils
 				.loadAnimation(this, R.anim.left_out);
-		didanda=(ImageView)findViewById(R.id.chara);
-		didandajumpAnimation=AnimationUtils.loadAnimation(this, R.anim.didanda_jump);
+		didanda = (ImageView) findViewById(R.id.chara);
+		didandajumpAnimation = AnimationUtils.loadAnimation(this,
+				R.anim.didanda_jump);
 		didanda.startAnimation(didandajumpAnimation);
+		preferences = getSharedPreferences("pref", MODE_PRIVATE);
+		highScore.setText(""
+				+ preferences.getInt("" + flipper.getDisplayedChild(), 0));
 	}
-	public void touchDidanda(View v){
-//		didandajumpAnimation.setRepeatMode(Animation.REVERSE);
-//		didandajumpAnimation.setRepeatCount(Animation.INFINITE);
-//		didanda.startAnimation(didandajumpAnimation);
+
+	public void touchDidanda(View v) {
+		// didandajumpAnimation.setRepeatMode(Animation.REVERSE);
+		// didandajumpAnimation.setRepeatCount(Animation.INFINITE);
+		// didanda.startAnimation(didandajumpAnimation);
 	}
+
 	public void fromStart(View v) {
 		Intent intent = new Intent(StartActivity.this, MainActivity.class);
 		intent.putExtra("ìÔà’ìx", flipper.getDisplayedChild());
 		startActivity(intent);
 		Log.d("Ç©Ç∏", "" + flipper.getDisplayedChild());
+		highScore.setText(""
+				+ preferences.getInt("" + flipper.getDisplayedChild(), 0));
 
 	}
 
@@ -60,6 +74,8 @@ public class StartActivity extends Activity {
 		flipper.setInAnimation(inFromRightAnimation);
 		flipper.setOutAnimation(outToLeftAnimation);
 		flipper.showNext();
+		highScore.setText(""
+				+ preferences.getInt("" + flipper.getDisplayedChild(), 0));
 
 	}
 
@@ -67,7 +83,7 @@ public class StartActivity extends Activity {
 		flipper.setInAnimation(inFromLeftAnimation);
 		flipper.setOutAnimation(outToRightAnimation);
 		flipper.showPrevious();
-		//0Ç™Ç©ÇÒÇΩÇÒÅA1Ç™ÇﬁÇ∏Ç©ÇµÇ¢
+		// 0Ç™Ç©ÇÒÇΩÇÒÅA1Ç™ÇﬁÇ∏Ç©ÇµÇ¢
 
 	}
 

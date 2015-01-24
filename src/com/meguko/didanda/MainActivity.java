@@ -1,11 +1,13 @@
 package com.meguko.didanda;
 
 import java.lang.reflect.Method;
+import java.security.PublicKey;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class MainActivity extends Activity {
 	boolean UPUP = false;
 	LinearLayout backGround;
 	ScrollView scrollView;
+	int difficuly;
 
 	int updown;
 	int maxHeight, scrollHeight, oneupY, nowHeight;// スクロールするとき
@@ -49,14 +52,16 @@ public class MainActivity extends Activity {
 	boolean gameover = false;
 
 	float time = 0;
-	
+
 	MediaPlayer mp = null;
+	SharedPreferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		 mp = MediaPlayer.create(this, R.raw.sen_ge_panchi04);
+		preferences = getSharedPreferences("pref", MODE_PRIVATE);
+		mp = MediaPlayer.create(this, R.raw.sen_ge_panchi04);
 
 		//
 		didandaView = (ImageView) findViewById(R.id.didandaView);
@@ -71,7 +76,7 @@ public class MainActivity extends Activity {
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
 		scrollView.setVerticalScrollBarEnabled(false);
 		Intent intent = getIntent();
-		int difficuly;
+		
 		difficuly = intent.getIntExtra("難易度", 0);
 		if (difficuly == 0) {
 			x = (float) 1.2;
@@ -180,14 +185,14 @@ public class MainActivity extends Activity {
 	}
 
 	public void countUp() {
-		
+
 		if (!gameover) {
-//			if(mp!=null){
-//			mp=null;
-//			 mp = MediaPlayer.create(this, R.raw.sen_ge_panchi04);
-//
-//			 mp.start();
-//			}
+			// if(mp!=null){
+			// mp=null;
+			// mp = MediaPlayer.create(this, R.raw.sen_ge_panchi04);
+			//
+			// mp.start();
+			// }
 
 			if (upP > 7 && upP < 32) {
 				didandaView.setTranslationY(-2 * (upP - 6));
@@ -212,7 +217,7 @@ public class MainActivity extends Activity {
 			countTimer = new Timer();
 			countTimer.schedule(new MyTimer(), 1000);
 			if (nowHeight < 3201) {
-				scoreText.setText("" + nowHeight+"mm");
+				scoreText.setText("" + nowHeight + "mm");
 			}
 			now = System.currentTimeMillis();
 			if (point > 0) {// 2回目以降のタップ
@@ -222,14 +227,14 @@ public class MainActivity extends Activity {
 			before = now;
 
 			five_score = 0;
-			if(nowHeight>=400){
-				u=(float) 1.2;
-			}else if(nowHeight>=800){
-				u=(float)1.25;
-			}else if(nowHeight>=1200){
-				u=(float)1.3;
-			}else if(nowHeight>=1600){
-				u=(float)1.4;
+			if (nowHeight >= 400) {
+				u = (float) 1.2;
+			} else if (nowHeight >= 800) {
+				u = (float) 1.25;
+			} else if (nowHeight >= 1200) {
+				u = (float) 1.3;
+			} else if (nowHeight >= 1600) {
+				u = (float) 1.4;
 			}
 			for (int i = 0; i < 5; i++) {
 				five_score = five_score + timeDifference[i];
@@ -239,7 +244,7 @@ public class MainActivity extends Activity {
 			if (five_score < 300) {
 				upP++;
 				updown = 3;
-			}else if (five_score < 400) {
+			} else if (five_score < 400) {
 				upP++;
 				UPUP = true;
 				updown = 2;
@@ -326,10 +331,17 @@ public class MainActivity extends Activity {
 	public void gameOver() {
 		// げーむおーばーになった時の処理。??
 		Log.d("げむおば", "げむおば");
+
 		gameOverView.setVisibility(View.VISIBLE);
 		tap = true;
 		gameover = true;
-
+		int high=preferences.getInt(difficuly+"", 0);
+		if(nowHeight>=high){
+		  SharedPreferences.Editor editor = preferences.edit();
+		  editor.putInt(difficuly+"", nowHeight);
+		  editor.commit();
+		}
+		
 		if (timer != null) {
 			timer.cancel();
 		}
