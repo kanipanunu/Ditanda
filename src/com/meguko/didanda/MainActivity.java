@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
 		gameOverView.setVisibility(View.INVISIBLE);
 
 		scrollView = (ScrollView) findViewById(R.id.scrollView1);
+		scrollView.setVerticalScrollBarEnabled(false);
 		Intent intent = getIntent();
 		int difficuly;
 		difficuly = intent.getIntExtra("“ïˆÕ“x", 0);

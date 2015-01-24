@@ -4,7 +4,10 @@
      >
  <translate
     android:fromYDelta="0"
-    android:toYDelta="-10%p" 
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"
+    android:interpolator="@android:anim/overshoot_interpolator"
+    android:toYDelta="10%"
     android:duration="500"
    />
 

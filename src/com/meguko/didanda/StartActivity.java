@@ -39,10 +39,9 @@ public class StartActivity extends Activity {
 				R.anim.right_out);
 		outToLeftAnimation = AnimationUtils
 				.loadAnimation(this, R.anim.left_out);
-//		didanda=(ImageView)findViewById(R.id.chara);
-//		didandajumpAnimation=AnimationUtils.loadAnimation(this, R.anim.didanda_jump);
-//		didanda.startAnimation(didandajumpAnimation);
-//		
+		didanda=(ImageView)findViewById(R.id.chara);
+		didandajumpAnimation=AnimationUtils.loadAnimation(this, R.anim.didanda_jump);
+		didanda.startAnimation(didandajumpAnimation);
 	}
 	public void touchDidanda(View v){
 //		didandajumpAnimation.setRepeatMode(Animation.REVERSE);
