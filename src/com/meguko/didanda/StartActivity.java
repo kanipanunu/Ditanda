@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ViewFlipper;
 
 public class StartActivity extends Activity {
@@ -20,6 +21,8 @@ public class StartActivity extends Activity {
 	Animation inFromLeftAnimation;
 	Animation outToRightAnimation;
 	Animation outToLeftAnimation;
+	Animation didandajumpAnimation;
+	ImageView didanda;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,16 @@ public class StartActivity extends Activity {
 				R.anim.right_out);
 		outToLeftAnimation = AnimationUtils
 				.loadAnimation(this, R.anim.left_out);
+//		didanda=(ImageView)findViewById(R.id.chara);
+//		didandajumpAnimation=AnimationUtils.loadAnimation(this, R.anim.didanda_jump);
+//		didanda.startAnimation(didandajumpAnimation);
+//		
 	}
-
+	public void touchDidanda(View v){
+//		didandajumpAnimation.setRepeatMode(Animation.REVERSE);
+//		didandajumpAnimation.setRepeatCount(Animation.INFINITE);
+//		didanda.startAnimation(didandajumpAnimation);
+	}
 	public void fromStart(View v) {
 		Intent intent = new Intent(StartActivity.this, MainActivity.class);
 		intent.putExtra("“ïˆÕ“x", flipper.getDisplayedChild());
